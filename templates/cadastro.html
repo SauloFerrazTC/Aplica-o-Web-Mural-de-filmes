@@ -44,7 +44,9 @@
             </div>
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
-        
+        {% if mensagem %}
+        {{ mensagem }}
+    {% endif %} 
         
         <br>
         <a href="{% url 'index' %}">Voltar para a página inicial</a>

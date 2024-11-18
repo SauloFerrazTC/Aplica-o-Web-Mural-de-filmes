@@ -6,6 +6,8 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from .forms import CustomUserCreationForm
+from django.contrib import messages
+
 
 class Login(View):
 
@@ -31,6 +33,7 @@ class Login(View):
 
         return render(request, 'login.html', {'mensagem': 'Usuário ou senha errados'})     
 
+
 class Cadastro(View):
 
     def post(self, request):
@@ -41,10 +44,12 @@ class Cadastro(View):
             return redirect('index')  # Redireciona para a página inicial após o cadastro
         else:
             messages.error(request, "Erro ao criar usuário. Tente novamente.")
+            # Retorna o formulário inválido para a mesma página com mensagens de erro
+            return render(request, 'cadastro.html', {'form': form})
 
     def get(self, request):
+        
         form = CustomUserCreationForm()
-    
         return render(request, 'cadastro.html', {'form': form})
 
 class Index(View):
