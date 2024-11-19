@@ -13,19 +13,39 @@
         <nav>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="./cadastroFilme">Cadastrar Filme</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'criar-filmes' %}">Cadastrar Filme</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="{% url 'logout_usuario' %}">Sair da conta</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                </li>
-              </ul>
+            </ul>
         </nav>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link {% if not request.GET.categoria %}active{% endif %}" href="{% url 'listar-filmes' %}">Todos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.GET.categoria == 'acao' %}active{% endif %}" href="{% url 'listar-filmes' %}?categoria=acao">Ação</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.GET.categoria == 'comedia' %}active{% endif %}" href="{% url 'listar-filmes' %}?categoria=comedia">Comédia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.GET.categoria == 'drama' %}active{% endif %}" href="{% url 'listar-filmes' %}?categoria=drama">Drama</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.GET.categoria == 'suspense' %}active{% endif %}" href="{% url 'listar-filmes' %}?categoria=suspense">Suspense</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.GET.categoria == 'terror' %}active{% endif %}" href="{% url 'listar-filmes' %}?categoria=terror">Terror</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.GET.categoria == 'ficcao' %}active{% endif %}" href="{% url 'listar-filmes' %}?categoria=ficcao">Ficção Científica</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.GET.categoria == 'romance' %}active{% endif %}" href="{% url 'listar-filmes' %}?categoria=romance">Romance</a>
+          </li>
+        </ul>
     </header>
 
     <main>
@@ -34,9 +54,6 @@
         {% endblock %}
     </main>
 
-    <footer>
-        <p>© 2024 Minha Aplicação. Todos os direitos reservados.</p>
-    </footer>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
