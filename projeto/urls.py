@@ -24,5 +24,6 @@ urlpatterns = [
     path('login/', Login.as_view(), name='login_usuario'),
     path('logout/', Logout.as_view(), name='logout_usuario'),
     path('filmes/', include('filmes.urls'), name='filmes'),
+    path('comentarios/', include('comentarios.urls'), name='comentarios'),
     path('', Index.as_view(), name='index'),  # URL para a página inicial
 ]

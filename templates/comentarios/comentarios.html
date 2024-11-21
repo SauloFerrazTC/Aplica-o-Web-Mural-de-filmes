@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Detalhes do Filme{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if filme %}
+        <!-- Detalhes do filme -->
+        <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+            <div class="row g-0">
+                <div class="col-md-4 text-center">
+                    {% if filme.capa %}
+                        <img src="{{ filme.capa.url }}" style="width: 200px; height: 300px; object-fit: cover;" class="img-fluid rounded" alt="{{ filme.titulo }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/300x400.png?text=Sem+Capa" style="width: 300px; height: 400px; object-fit: cover;" class="img-fluid rounded" alt="Sem Capa">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h2 class="card-title text-primary">{{ filme.titulo }}</h2>
+                        <p class="card-subtitle text-muted mb-2">Lançado em: {{ filme.ano }}</p>
+                        <hr>
+                        <p class="card-text">{{ filme.descricao }}</p>
+                        <hr>
+                        <a href="{% url 'criar-comentarios' filme.id  %}" class="btn btn-outline-primary btn-sm">Adicionar comentário</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted text-center">Filme não encontrado.</p>
+    {% endif %}
+
+    <!-- Comentários -->
+    <div class="container mt-5">
+        <h3 class="text-center mb-4 text-primary">Comentários</h3>
+        {% if comentarios %}
+            <ul class="list-group">
+                {% for comentario in comentarios %}
+                    <li class="list-group-item">
+                        <p><strong>Usuário:</strong> {{ comentario.iduser }}</p>
+                        <p><strong>Comentário:</strong> {{ comentario.coment }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted text-center">Ainda não há comentários para este filme.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

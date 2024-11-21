@@ -10,13 +10,13 @@
     <div class="text-center mb-4">
         <h3>{{ object.titulo }} ({{ object.ano }})</h3> <!-- Exibe o título e ano do filme -->
         {% if object.capa %}
-            <img src="{{ object.capa.url }}" alt="{{ object.titulo }}" style="max-height: 250px; object-fit: cover; border-radius: 8px;">
+            <img src="{{ object.capa.url }}" alt="{{ object.titulo }}" style="max-height: 450px; object-fit: cover; border-radius: 8px;">
         {% else %}
             <img src="https://via.placeholder.com/300x200.png?text=Sem+Capa" alt="Sem Capa" style="max-height: 250px; object-fit: cover; border-radius: 8px;">
         {% endif %}
     </div>
 
-    <form method="post">
+    <form class="text-center mb-4" method="post">
         {% csrf_token %}
         {{ form.as_p }}  <!-- Exibe o formulário com campo de descrição editável -->
         <button type="submit" class="btn btn-primary">Salvar alterações</button>

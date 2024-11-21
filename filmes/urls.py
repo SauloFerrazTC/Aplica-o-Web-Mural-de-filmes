@@ -1,5 +1,5 @@
 
-from django.urls import path
+from django.urls import path, include
 from filmes.views import ListarFilmes, FotoFilmes, CriarFilme, DeletarFilme, EditarDescricaoFilme
 
 urlpatterns = [
@@ -8,4 +8,5 @@ path('fotos/<str:arquivo>/', FotoFilmes.as_view(), name='foto-filmes'),
 path('cadastroFilme/', CriarFilme.as_view(), name='criar-filmes'),
 path('deletarfilme/<pk>/', DeletarFilme.as_view(), name='deletar-filmes'),
 path('editar/<int:pk>/', EditarDescricaoFilme.as_view(), name='editar-filmes'),
+path('comentarios/', include('comentarios.urls'), name='comentarios'),
 ]

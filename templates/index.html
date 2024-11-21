@@ -9,10 +9,16 @@
 </head>
 <body>
     <div class="container text-center mt-5">
-        <h1>Bem-vindo ao Mural Filmes</h1>
-        <p><a href="/cadastro/" class="btn btn-primary">Cadastrar</a></p>
-        <p><a href="/login/" class="btn btn-primary">Login</a></p>
+        <!-- Texto centralizado e maior -->
+        <h1 class="display-4">Bem-vindo ao Mural Filmes</h1>
+        
+        <!-- Botões lado a lado -->
+        <div class="d-flex justify-content-center mt-4">
+            <a href="/cadastro/" class="btn btn-primary mx-2">Cadastrar</a>
+            <a href="/login/" class="btn btn-primary mx-2">Login</a>
+        </div>
     </div>
+    
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

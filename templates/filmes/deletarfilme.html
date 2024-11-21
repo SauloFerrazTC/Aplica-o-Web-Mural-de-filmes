@@ -3,10 +3,19 @@
 {% block title %}Excluir Filme{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="text-center mb-4">
+    <h3>{{ object.titulo }} ({{ object.ano }})</h3> <!-- Exibe o título e ano do filme -->
+    {% if object.capa %}
+        <img src="{{ object.capa.url }}" alt="{{ object.titulo }}" style="height: 450px; object-fit: cover; border-radius: 8px;">
+    {% else %}
+        <img src="https://via.placeholder.com/300x200.png?text=Sem+Capa" alt="Sem Capa" style="max-height: 250px; object-fit: cover; border-radius: 8px;">
+    {% endif %}
+</div>
+
+<div class="text-center mb-4"  class="container mt-5">
     <h2 class="text-center">Excluir Filme</h2>
     <p>Você tem certeza que deseja excluir o filme <strong>{{ object.titulo }}</strong>?</p>
-    <form method="post">
+    <form class="text-center mb-4" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Excluir</button>
         <a href="{% url 'listar-filmes' %}" class="btn btn-secondary">Cancelar</a>

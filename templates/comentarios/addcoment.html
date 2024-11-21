@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Adicionar Comentário{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Adicionar Comentário</h1>
+    <h3 class="text-center text-muted">Filme: {{ filme.titulo }}</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="POST" class="card p-4 shadow-lg">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary w-100">Enviar Comentário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

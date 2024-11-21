@@ -25,7 +25,7 @@
                     </div>
                     {% endif %}
                 </div>
-                <a href="#" class="btn btn-primary">Comentários</a>
+                <a href="{% url 'listar-comentarios' filme.id %}" class="btn btn-primary">Comentários</a>
             </div>
         </div>
         {% endfor %}
