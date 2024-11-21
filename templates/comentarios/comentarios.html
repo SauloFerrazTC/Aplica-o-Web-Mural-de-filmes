@@ -31,21 +31,34 @@
         <p class="text-muted text-center">Filme não encontrado.</p>
     {% endif %}
 
-    <!-- Comentários -->
-    <div class="container mt-5">
-        <h3 class="text-center mb-4 text-primary">Comentários</h3>
-        {% if comentarios %}
-            <ul class="list-group">
-                {% for comentario in comentarios %}
-                    <li class="list-group-item">
-                        <p><strong>Usuário:</strong> {{ comentario.iduser }}</p>
-                        <p><strong>Comentário:</strong> {{ comentario.coment }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="text-muted text-center">Ainda não há comentários para este filme.</p>
-        {% endif %}
-    </div>
+<!-- Comentários -->
+<div class="container mt-5">
+    <h3 class="text-center mb-4 text-primary">Comentários</h3>
+    
+    {% if comentarios %}
+        <div class="list-group">
+            {% for comentario in comentarios %}
+                <div class="list-group-item mb-4 shadow-lg rounded border-0" style="background-color: #f9f9f9; border-left: 5px solid #007bff;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Nome do usuário com destaque -->
+                        <h5 class="mb-1" style="color: #fff; background-color: #007bff; padding: 8px 16px; border-radius: 50px; font-weight: bold;">
+                            {{ comentario.iduser }}
+                        </h5>
+                        <!-- Data do comentário -->
+                        <small class="text-muted">{{ comentario.created_at|date:"d/m/Y H:i" }}</small>
+                    </div>
+                    <!-- Comentário -->
+                    <p class="mt-3" style="font-style: italic; color: #555; font-size: 1.1rem;">
+                        {{ comentario.coment }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            Ainda não há comentários para este filme.
+        </div>
+    {% endif %}
+</div>
 </div>
 {% endblock %}

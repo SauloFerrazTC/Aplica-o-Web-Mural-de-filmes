@@ -1,7 +1,7 @@
 # Create your views here.
 from django.views.generic import View, CreateView, UpdateView, DeleteView
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 from django.http import FileResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
@@ -47,7 +47,7 @@ class CriarComentario(LoginRequiredMixin, CreateView):
         Define os valores adicionais para o formulário e salva.
         """
         form.save(user=self.request.user, filme=self.filme)  # Passa o usuário logado e o filme para o método save
-        return redirect('comentarios', filme_id=self.filme.id)
+        return redirect('listar-comentarios', filme_id=self.filme.id)
 
     def get_context_data(self, **kwargs):
         """
