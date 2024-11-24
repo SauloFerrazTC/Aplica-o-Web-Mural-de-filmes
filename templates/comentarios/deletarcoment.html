@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Excluir Filme{% endblock %}
+
+{% block content %}
+
+<div class="text-center mb-4"  class="container mt-5">
+    <h2 class="text-center">Excluir Comentário</h2>
+    <p>Você tem certeza que deseja excluir o seu comentário?</p>
+    <form class="text-center mb-4" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a href="{{ previous_url }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

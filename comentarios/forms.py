@@ -13,3 +13,15 @@ class ComentarioForm(forms.ModelForm):
         if commit:
             comentario.save()
         return comentario
+        
+class EditarComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['coment']
+        widgets = {
+            'coment': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Edite seu comentário...',
+                'rows': 4,
+            }),
+        }
