@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="text-center mb-4">
-    <h3>{{ object.titulo }} ({{ object.ano }})</h3> <!-- Exibe o título e ano do filme -->
+    <h3>{{ object.titulo }} ({{ object.ano }})</h3> 
     {% if object.capa %}
         <img src="{{ object.capa.url }}" alt="{{ object.titulo }}" style="height: 450px; object-fit: cover; border-radius: 8px;">
     {% else %}

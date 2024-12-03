@@ -7,8 +7,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from filmes.models import Filme
+from filmes.serializers import FilmeSerializer, FilmeDescricaoSerializer, CriarFilmeSerializer
 from filmes.forms import FilmeForm, FilmeDescricaoForm
 from django.contrib.auth.models import User
+from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework import permissions
 
 
 class ListarFilmes(LoginRequiredMixin, ListView):
@@ -17,14 +22,11 @@ class ListarFilmes(LoginRequiredMixin, ListView):
     template_name = 'filmes/filmes.html'
 
     def get_queryset(self):
-        """
-        Filtra os filmes pela categoria, se a categoria for fornecida na URL.
-        Caso contrário, retorna todos os filmes.
-        """
+
         categoria = self.request.GET.get('categoria')  # Obtém a categoria da URL
         if categoria:
-            return Filme.objects.filter(categoria=categoria)  # Filtra os filmes pela categoria
-        return Filme.objects.all()  # Se não houver categoria, retorna todos os filmes
+            return Filme.objects.filter(categoria=categoria)  
+        return Filme.objects.all()  
 
 class FotoFilmes(LoginRequiredMixin, View):
 
@@ -44,7 +46,7 @@ class CriarFilme(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('listar-filmes')
 
     def form_valid(self, form):
-        form.instance.iduser = self.request.user  # Associa o usuário logado ao campo iduser
+        form.instance.iduser = self.request.user  
         return super().form_valid(form)
 
 class DeletarFilme(LoginRequiredMixin, DeleteView):
@@ -53,9 +55,7 @@ class DeletarFilme(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('listar-filmes')
 
     def get_queryset(self):
-        """
-        Restringe a exclusão para filmes que pertencem ao usuário logado.
-        """
+
         return Filme.objects.filter(iduser=self.request.user)
 
 class EditarDescricaoFilme(LoginRequiredMixin, UpdateView):
@@ -71,7 +71,48 @@ class EditarDescricaoFilme(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_queryset(self):
-        """
-        Restringe a exclusão para filmes que pertencem ao usuário logado.
-        """
-        return Filme.objects.filter(iduser=self.request.user)        
+
+        return Filme.objects.filter(iduser=self.request.user)  
+
+
+
+
+class ListarFilmesAPI(ListAPIView):
+
+    queryset = Filme.objects.all()
+    serializer_class = FilmeSerializer
+    permission_classes = [IsAuthenticated]  
+    authentication_classes = [TokenAuthentication]
+
+    def get_queryset(self):
+        categoria = self.request.query_params.get('categoria')
+        if categoria:
+            return Filme.objects.filter(categoria=categoria)
+        return Filme.objects.all()  
+
+class APIDeletarFilmes(DestroyAPIView):
+    serializer_class = FilmeSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Filme.objects.filter(iduser=self.request.user)  
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+class EditarAPIDescricaoFilme(UpdateAPIView):
+
+    queryset = Filme.objects.all()  
+    serializer_class = FilmeDescricaoSerializer  
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class CriarFilmeAPI(CreateAPIView):
+    queryset = Filme.objects.all()  
+    serializer_class = CriarFilmeSerializer 
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]  
+
+    def perform_create(self, serializer):
+        serializer.save(iduser=self.request.user)

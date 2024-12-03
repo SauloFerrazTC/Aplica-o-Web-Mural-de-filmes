@@ -4,7 +4,7 @@ from .models import Comentario
 class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
-        fields = ['coment']  # Só o comentário será preenchido pelo usuário
+        fields = ['coment']  
 
     def save(self, user, filme, commit=True):
         comentario = super().save(commit=False)

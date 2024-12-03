@@ -16,14 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from projeto.views import Login, Logout, Cadastro, Index
+from projeto.views import Login, Logout, Cadastro, Index, LoginAPI, CadastroUsuarioAPI
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cadastro/', Cadastro.as_view(), name='cadastrar_usuario'),
+    path('autenticacao-api/', LoginAPI.as_view()),
+    path('api/cadastro/', CadastroUsuarioAPI.as_view(), name='api-cadastro'),
     path('login/', Login.as_view(), name='login_usuario'),
     path('logout/', Logout.as_view(), name='logout_usuario'),
     path('filmes/', include('filmes.urls'), name='filmes'),
     path('comentarios/', include('comentarios.urls'), name='comentarios'),
-    path('', Index.as_view(), name='index'),  # URL para a página inicial
+    path('', Index.as_view(), name='index'),  
 ]

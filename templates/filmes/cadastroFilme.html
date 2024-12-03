@@ -3,43 +3,53 @@
 {% block title %}Cadastro de Filmes{% endblock %}
 
 {% block content %}
-<h1 class="text-center mb-4">Cadastro de Filme</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4>Cadastro de Filme</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'criar-filmes' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                  
+                        <div class="mb-3">
+                            <label for="id_titulo" class="form-label">Título</label>
+                            {{ form.titulo }}
+                        </div>
 
-<form action="{% url 'criar-filmes' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="id_ano" class="form-label">Ano</label>
+                            {{ form.ano}}
+                        </div>
 
-    <!-- Título -->
-    <div class="mb-3">
-        <label for="id_titulo" class="form-label">Título</label>
-        {{ form.titulo }}
+                        <div class="mb-3">
+                            <label for="id_descricao" class="form-label">Descrição</label>
+                            {{ form.descricao }}
+                        </div>
+
+                        
+                        <div class="mb-3">
+                            <label for="id_categoria" class="form-label">Categoria</label>
+                            {{ form.categoria }}
+                        </div>
+
+                        
+                        <div class="mb-3">
+                            <label for="id_foto" class="form-label">Capa</label>
+                            {{ form.capa}}
+                        </div>
+
+                        
+                        <button type="submit" class="btn btn-primary w-100">Cadastrar Filme</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Ano -->
-    <div class="mb-3">
-        <label for="id_ano" class="form-label">Ano</label>
-        {{ form.ano }}
-    </div>
-
-    <!-- Descrição -->
-    <div class="mb-3">
-        <label for="id_descricao" class="form-label">Descrição</label>
-        {{ form.descricao }}
-    </div>
-
-    <!-- Categoria -->
-    <div class="mb-3">
-        <label for="id_categoria" class="form-label">Categoria</label>
-        {{ form.categoria }}
-    </div>
-
-    <!-- Capa -->
-    <div class="mb-3">
-        <label for="id_foto" class="form-label">Capa</label>
-        {{ form.capa }}
-    </div>
-
-    <!-- Botão de envio -->
-    <button type="submit" class="btn btn-primary w-100">Cadastrar Filme</button>
-</form>
+</div>
 
 {% endblock %}
+

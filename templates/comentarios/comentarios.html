@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container mt-4">
     {% if filme %}
-        <!-- Detalhes do filme -->
+        
         <div class="card shadow-lg p-3 mb-5 bg-body rounded">
             <div class="row g-0">
                 <div class="col-md-4 text-center">
@@ -31,7 +31,7 @@
         <p class="text-muted text-center">Filme não encontrado.</p>
     {% endif %}
 
-<!-- Comentários -->
+
 <div class="container mt-5">
     <h3 class="text-center mb-4 text-primary">Comentários</h3>
     
@@ -40,14 +40,14 @@
             {% for comentario in comentarios %}
                 <div class="list-group-item mb-4 shadow-lg rounded border-0" style="background-color: #f9f9f9; border-left: 5px solid #007bff;">
                     <div class="d-flex justify-content-between align-items-center">
-                        <!-- Nome do usuário com destaque -->
+                        
                         <h5 class="mb-1" style="color: #fff; background-color: #007bff; padding: 8px 16px; border-radius: 50px; font-weight: bold;">
                             {{ comentario.iduser }}
                         </h5>
-                        <!-- Data do comentário -->
+                        
                         <small class="text-muted">{{ comentario.created_at|date:"d/m/Y H:i" }}</small>
                     </div>
-                    <!-- Comentário -->
+                    
                     <p class="mt-3" style="font-style: italic; color: #555; font-size: 1.1rem;">
                         {{ comentario.coment }}
                     </p>

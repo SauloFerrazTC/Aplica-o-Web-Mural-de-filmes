@@ -7,6 +7,13 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from .forms import CustomUserCreationForm
 from django.contrib import messages
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.authentication import TokenAuthentication
+from rest_framework import permissions
+from .serializers import CadastroUsuarioSerializer
+from rest_framework.views import APIView
+from rest_framework import status
 
 
 class Login(View):
@@ -41,10 +48,10 @@ class Cadastro(View):
         if form.is_valid():
             form.save()
             messages.success(request, "Usuário criado com sucesso!")
-            return redirect('index')  # Redireciona para a página inicial após o cadastro
+            return redirect('index')  
         else:
             messages.error(request, "Erro ao criar usuário. Tente novamente.")
-            # Retorna o formulário inválido para a mesma página com mensagens de erro
+            
             return render(request, 'cadastro.html', {'form': form})
 
     def get(self, request):
@@ -61,3 +68,33 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return redirect(settings.LOGIN_URL)    
+
+class LoginAPI(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(
+            data=request.data,
+            context={'request': request}
+        )
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'id': user.id,
+            'nome': user.first_name or user.username,  
+            'email': user.email,
+            'token': token.key
+        })    
+
+
+class CadastroUsuarioAPI(APIView):
+    permission_classes = [AllowAny] 
+    def post(self, request):
+        serializer = CadastroUsuarioSerializer(data=request.data)
+        if serializer.is_valid():
+            
+            serializer.save()
+            return Response(
+                {"mensagem": "Usuário cadastrado com sucesso!"},
+                status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

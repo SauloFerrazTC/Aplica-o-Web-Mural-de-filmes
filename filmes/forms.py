@@ -10,9 +10,9 @@ class FilmeForm(forms.ModelForm):
 class FilmeDescricaoForm(forms.ModelForm):
     class Meta:
         model = Filme
-        fields = ['descricao']  # Apenas o campo de descrição será exibido
+        fields = ['descricao']  
 
     def __init__(self, *args, **kwargs):
         super(FilmeDescricaoForm, self).__init__(*args, **kwargs)
-        # Desabilita os outros campos (não exibimos eles)
+        
         self.fields['descricao'].widget.attrs['placeholder'] = 'Digite a nova descrição...'

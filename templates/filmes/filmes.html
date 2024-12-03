@@ -5,30 +5,37 @@
 {% block content %}
 <div class="container mt-4">
     <h1 class="text-center mb-4">Mural de Filmes</h1>
-    <div class="row">
-        {% for filme in filmes %}
-        <div class="col-md-3 mb-4">
-            <div class="card" style="width: 15rem;">
-                {% if filme.capa %}
-                    <img src="{{ filme.capa.url }}" alt="{{ filme.titulo }}" class="card-img-top" style="max-height: 300px; object-fit: cover;">
-                {% else %}
-                    <img src="https://via.placeholder.com/300x200.png?text=Sem+Capa" alt="Sem Capa" class="card-img-top" style="max-height: 250px; object-fit: cover;">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ filme.titulo }} ({{ filme.ano }})</h5>
-                    <p class="card-text"><strong>Categoria:</strong> {{ filme.get_categoria_display }}</p>
-                    <p class="card-text">{{ filme.descricao|slice:":100" }}...</p>
-                    {% if filme.iduser == user %}
-                    <div class="d-flex justify-content-between">
-                        <a href="{% url 'deletar-filmes' filme.id %}" class="btn btn-danger btn-sm">Excluir</a>
-                        <a href="{% url 'editar-filmes' filme.id %}" class="btn btn-warning btn-sm">Editar descrição</a>
-                    </div>
+    
+    {% if filmes %}
+        <div class="row">
+            {% for filme in filmes %}
+            <div class="col-md-3 mb-4">
+                <div class="card" style="width: 15rem;">
+                    {% if filme.capa %}
+                        <img src="{{ filme.capa.url }}" alt="{{ filme.titulo }}" class="card-img-top" style="max-height: 300px; object-fit: cover;">
+                    {% else %}
+                        <img src="https://via.placeholder.com/300x200.png?text=Sem+Capa" alt="Sem Capa" class="card-img-top" style="max-height: 250px; object-fit: cover;">
                     {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ filme.titulo }} ({{ filme.ano }})</h5>
+                        <p class="card-text"><strong>Categoria:</strong> {{ filme.get_categoria_display }}</p>
+                        <p class="card-text">{{ filme.descricao|slice:":100" }}...</p>
+                        {% if filme.iduser == user %}
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'deletar-filmes' filme.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                            <a href="{% url 'editar-filmes' filme.id %}" class="btn btn-warning btn-sm">Editar descrição</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'listar-comentarios' filme.id %}" class="btn btn-primary">Comentários</a>
                 </div>
-                <a href="{% url 'listar-comentarios' filme.id %}" class="btn btn-primary">Comentários</a>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            Nenhum filme encontrado para exibição no momento.
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

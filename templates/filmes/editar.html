@@ -6,9 +6,9 @@
 <div class="container mt-4">
     <h1 class="text-center mb-4">Editar Descrição do Filme</h1>
 
-    <!-- Exibe o título e a capa do filme -->
+    
     <div class="text-center mb-4">
-        <h3>{{ object.titulo }} ({{ object.ano }})</h3> <!-- Exibe o título e ano do filme -->
+        <h3>{{ object.titulo }} ({{ object.ano }})</h3> 
         {% if object.capa %}
             <img src="{{ object.capa.url }}" alt="{{ object.titulo }}" style="max-height: 450px; object-fit: cover; border-radius: 8px;">
         {% else %}
@@ -18,7 +18,7 @@
 
     <form class="text-center mb-4" method="post">
         {% csrf_token %}
-        {{ form.as_p }}  <!-- Exibe o formulário com campo de descrição editável -->
+        {{ form.as_p }}  
         <button type="submit" class="btn btn-primary">Salvar alterações</button>
         <a href="{% url 'listar-filmes' %}" class="btn btn-secondary">Cancelar</a>
     </form>

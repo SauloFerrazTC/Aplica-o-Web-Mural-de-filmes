@@ -6,4 +6,4 @@ from django.contrib.auth.models import User
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']  # Apenas os campos desejados
+        fields = ['username', 'password1', 'password2']  
